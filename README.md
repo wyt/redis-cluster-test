@@ -1,7 +1,6 @@
 # redis-cluster-test
 
-
-#### 下载项目
+#### 下载redis-cluster-test项目
 
 ``` bash
 [root@pseudo-cluster local]# pwd
@@ -32,22 +31,21 @@ Installing ri documentation for redis-4.1
 ```
 
 #### 规划集群
-
 ``` bash
+[root@pseudo-cluster redis-cluster-test]# pwd
+/usr/local/redis-cluster-test
 [root@pseudo-cluster redis-cluster-test]# ls -lh
-total 12K
-drwxr-xr-x. 2 root root   80 Aug  1 18:07 7000
-drwxr-xr-x. 2 root root   80 Aug  1 18:08 7001
-drwxr-xr-x. 2 root root   80 Aug  1 18:07 7002
-drwxr-xr-x. 2 root root   80 Aug  1 18:07 7003
-drwxr-xr-x. 2 root root   80 Aug  1 18:08 7004
-drwxr-xr-x. 2 root root   80 Aug  1 18:07 7005
--rw-r--r--. 1 root root 3.5K Aug  1 05:34 README.md
-drwxr-xr-x. 3 root root   35 Aug  1 05:34 redis-3.2.13
--rwxr-xr-x. 1 root root   75 Aug  1 05:34 shutdown.sh
--rwxr-xr-x. 1 root root  635 Aug  1 05:34 startup.sh
-[root@pseudo-cluster redis-cluster-test]# 
-[root@pseudo-cluster redis-cluster-test]# 
+total 16K
+drwxr-xr-x. 2 root root   64 Aug  1 18:57 7000
+drwxr-xr-x. 2 root root   64 Aug  1 18:57 7001
+drwxr-xr-x. 2 root root   64 Aug  1 18:57 7002
+drwxr-xr-x. 2 root root   64 Aug  1 18:57 7003
+drwxr-xr-x. 2 root root   64 Aug  1 18:57 7004
+drwxr-xr-x. 2 root root   64 Aug  1 18:57 7005
+-rw-r--r--. 1 root root 7.1K Aug  1 18:56 README.md
+drwxr-xr-x. 3 root root   35 Aug  1 18:54 redis-3.2.13
+-rwxr-xr-x. 1 root root   75 Aug  1 18:54 shutdown.sh
+-rwxr-xr-x. 1 root root  635 Aug  1 18:54 startup.sh
 [root@pseudo-cluster redis-cluster-test]# ./startup.sh 
 /usr/local/redis-cluster-test/7000
 /usr/local/redis-cluster-test/7001
@@ -55,14 +53,13 @@ drwxr-xr-x. 3 root root   35 Aug  1 05:34 redis-3.2.13
 /usr/local/redis-cluster-test/7003
 /usr/local/redis-cluster-test/7004
 /usr/local/redis-cluster-test/7005
-5 S root      14589      1  0  80   0 - 35257 ep_pol 18:36 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7000 [cluster]
-5 S root      14591      1  0  80   0 - 35257 ep_pol 18:36 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7001 [cluster]
-5 S root      14595      1  0  80   0 - 35257 ep_pol 18:36 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7002 [cluster]
-5 S root      14601      1  0  80   0 - 35257 ep_pol 18:36 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7003 [cluster]
-5 S root      14605      1  0  80   0 - 35257 ep_pol 18:36 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7004 [cluster]
-5 S root      14609      1  0  80   0 - 35257 ep_pol 18:36 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7005 [cluster]
-[root@pseudo-cluster redis-cluster-test]# cd redis-3.2.13/bin
-[root@pseudo-cluster bin]# ./redis-trib.rb create --replicas 1 192.168.91.146:7000 192.168.91.146:7001 192.168.91.146:7002 192.168.91.146:7003 192.168.91.146:7004 192.168.91.146:7005
+5 S root      14845      1  0  80   0 - 35257 ep_pol 18:59 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7000 [cluster]
+5 S root      14849      1  0  80   0 - 35257 ep_pol 18:59 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7001 [cluster]
+5 S root      14853      1  0  80   0 - 35257 ep_pol 18:59 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7002 [cluster]
+5 S root      14857      1  0  80   0 - 35257 ep_pol 18:59 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7003 [cluster]
+5 S root      14861      1  0  80   0 - 35257 ep_pol 18:59 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7004 [cluster]
+5 S root      14865      1  0  80   0 - 35257 ep_pol 18:59 ?        00:00:00 ../redis-3.2.13/bin/redis-server *:7005 [cluster]
+[root@pseudo-cluster redis-cluster-test]# ./redis-3.2.13/bin/redis-trib.rb create --replicas 1 192.168.91.146:7000 192.168.91.146:7001 192.168.91.146:7002 192.168.91.146:7003 192.168.91.146:7004 192.168.91.146:7005
 >>> Creating cluster
 >>> Performing hash slots allocation on 6 nodes...
 Using 3 masters:
@@ -72,54 +69,59 @@ Using 3 masters:
 Adding replica 192.168.91.146:7003 to 192.168.91.146:7000
 Adding replica 192.168.91.146:7004 to 192.168.91.146:7001
 Adding replica 192.168.91.146:7005 to 192.168.91.146:7002
-M: c8d905ab36662ee532e153fe078ded652d29f944 192.168.91.146:7000
+M: 50925d802a5f1be70521fafea196e8b112c122ca 192.168.91.146:7000
    slots:0-5460 (5461 slots) master
-M: 8ac9d5388d8d288c12f8bab8e3da6d969c55374d 192.168.91.146:7001
+M: c4a38513a633aab450a3d491c30ec6b305b7abef 192.168.91.146:7001
    slots:5461-10922 (5462 slots) master
-M: 7d9b01ec9474b89bf1fe35c0106fd60667836316 192.168.91.146:7002
+M: 963dd0cac7581f29464624cb0df8a678cdfc54cd 192.168.91.146:7002
    slots:10923-16383 (5461 slots) master
-S: 6ae00956436fa1ceb4eafcd82c3846bd8edeb51a 192.168.91.146:7003
-   replicates c8d905ab36662ee532e153fe078ded652d29f944
-S: d2e7b6edb4dcf238aadca19e87c3509c2283a121 192.168.91.146:7004
-   replicates 8ac9d5388d8d288c12f8bab8e3da6d969c55374d
-S: d9c33c0ffbb65b3177885f5307f68d66b7a15fec 192.168.91.146:7005
-   replicates 7d9b01ec9474b89bf1fe35c0106fd60667836316
+S: 6f3aa71e0d754d54738d746bd617d31adabd0d3f 192.168.91.146:7003
+   replicates 50925d802a5f1be70521fafea196e8b112c122ca
+S: 60cd05e9ed0350bd271fabacf00483bc9a34c2da 192.168.91.146:7004
+   replicates c4a38513a633aab450a3d491c30ec6b305b7abef
+S: 2755ff19dcb8d00967e66f7d19bf95603fa352dc 192.168.91.146:7005
+   replicates 963dd0cac7581f29464624cb0df8a678cdfc54cd
 Can I set the above configuration? (type 'yes' to accept): yes
 >>> Nodes configuration updated
 >>> Assign a different config epoch to each node
 >>> Sending CLUSTER MEET messages to join the cluster
-Waiting for the cluster to join.
+Waiting for the cluster to join...
 >>> Performing Cluster Check (using node 192.168.91.146:7000)
-M: c8d905ab36662ee532e153fe078ded652d29f944 192.168.91.146:7000
+M: 50925d802a5f1be70521fafea196e8b112c122ca 192.168.91.146:7000
    slots:0-5460 (5461 slots) master
    1 additional replica(s)
-M: 8ac9d5388d8d288c12f8bab8e3da6d969c55374d 192.168.91.146:7001
-   slots:5461-10922 (5462 slots) master
-   1 additional replica(s)
-S: d9c33c0ffbb65b3177885f5307f68d66b7a15fec 192.168.91.146:7005
-   slots: (0 slots) slave
-   replicates 7d9b01ec9474b89bf1fe35c0106fd60667836316
-S: d2e7b6edb4dcf238aadca19e87c3509c2283a121 192.168.91.146:7004
-   slots: (0 slots) slave
-   replicates 8ac9d5388d8d288c12f8bab8e3da6d969c55374d
-S: 6ae00956436fa1ceb4eafcd82c3846bd8edeb51a 192.168.91.146:7003
-   slots: (0 slots) slave
-   replicates c8d905ab36662ee532e153fe078ded652d29f944
-M: 7d9b01ec9474b89bf1fe35c0106fd60667836316 192.168.91.146:7002
+M: 963dd0cac7581f29464624cb0df8a678cdfc54cd 192.168.91.146:7002
    slots:10923-16383 (5461 slots) master
    1 additional replica(s)
+S: 2755ff19dcb8d00967e66f7d19bf95603fa352dc 192.168.91.146:7005
+   slots: (0 slots) slave
+   replicates 963dd0cac7581f29464624cb0df8a678cdfc54cd
+M: c4a38513a633aab450a3d491c30ec6b305b7abef 192.168.91.146:7001
+   slots:5461-10922 (5462 slots) master
+   1 additional replica(s)
+S: 6f3aa71e0d754d54738d746bd617d31adabd0d3f 192.168.91.146:7003
+   slots: (0 slots) slave
+   replicates 50925d802a5f1be70521fafea196e8b112c122ca
+S: 60cd05e9ed0350bd271fabacf00483bc9a34c2da 192.168.91.146:7004
+   slots: (0 slots) slave
+   replicates c4a38513a633aab450a3d491c30ec6b305b7abef
 [OK] All nodes agree about slots configuration.
 >>> Check for open slots...
 >>> Check slots coverage...
-[OK] All 16384 slots covered..2
-Done installing documentation for redis after 1 seconds
-1 gem installed
+[OK] All 16384 slots covered.
 ```
 
 #### 查看集群信息
 
 ``` bash
 [root@pseudo-cluster redis-cluster-test]# ./redis-3.2.13/bin/redis-cli -c -p 7000
+127.0.0.1:7000> CLUSTER NODES
+963dd0cac7581f29464624cb0df8a678cdfc54cd 192.168.91.146:7002 master - 0 1564657233357 3 connected 10923-16383
+2755ff19dcb8d00967e66f7d19bf95603fa352dc 192.168.91.146:7005 slave 963dd0cac7581f29464624cb0df8a678cdfc54cd 0 1564657233862 6 connected
+50925d802a5f1be70521fafea196e8b112c122ca 192.168.91.146:7000 myself,master - 0 0 1 connected 0-5460
+c4a38513a633aab450a3d491c30ec6b305b7abef 192.168.91.146:7001 master - 0 1564657234365 2 connected 5461-10922
+6f3aa71e0d754d54738d746bd617d31adabd0d3f 192.168.91.146:7003 slave 50925d802a5f1be70521fafea196e8b112c122ca 0 1564657235373 4 connected
+60cd05e9ed0350bd271fabacf00483bc9a34c2da 192.168.91.146:7004 slave c4a38513a633aab450a3d491c30ec6b305b7abef 0 1564657234868 5 connected
 127.0.0.1:7000> CLUSTER INFO
 cluster_state:ok
 cluster_slots_assigned:16384
@@ -130,21 +132,14 @@ cluster_known_nodes:6
 cluster_size:3
 cluster_current_epoch:6
 cluster_my_epoch:1
-cluster_stats_messages_sent:565
-cluster_stats_messages_received:560
-127.0.0.1:7000> CLUSTER NODES
-02e7acff62564c7b013b91ef6be26229b59b1340 192.168.91.146:7002 master - 0 1564655935214 3 connected 10923-16383
-b19247782173bcdc296a9a4c894ac4ebf0be06fe 192.168.91.146:7005 slave 02e7acff62564c7b013b91ef6be26229b59b1340 0 1564655936221 6 connected
-4673cd4d0ba1cb1bfb382e330df1a94e3e98a304 192.168.91.146:7003 slave 447503405d564419262c1a7764abfd4574c57b64 0 1564655936725 4 connected
-447503405d564419262c1a7764abfd4574c57b64 192.168.91.146:7000 myself,master - 0 0 1 connected 0-5460
-f3d940b97d786abef6e5b6ee4ec44716c6a60b81 192.168.91.146:7001 master - 0 1564655936221 2 connected 5461-10922
-f46e487d40fb43a70b51ecd15875f60e7201a5be 192.168.91.146:7004 slave f3d940b97d786abef6e5b6ee4ec44716c6a60b81 0 1564655935718 5 connected
-127.0.0.1:7000> 
+cluster_stats_messages_sent:207
+cluster_stats_messages_received:207
 ```
 
+#### 集群数据操作
 ``` bash
-[root@pseudo-cluster bin]# ./redis-cli -c -p 7000
-192.168.91.146:7000> set foo bar
+[root@pseudo-cluster redis-cluster-test]# ./redis-3.2.13/bin/redis-cli -c -p 7000
+127.0.0.1:7000> set foo bar
 -> Redirected to slot [12182] located at 192.168.91.146:7002
 OK
 192.168.91.146:7002> set hello world
@@ -156,11 +151,19 @@ OK
 192.168.91.146:7001> get foo
 -> Redirected to slot [12182] located at 192.168.91.146:7002
 "bar"
-192.168.91.146:7002> get name
--> Redirected to slot [5798] located at 192.168.91.146:7001
-"sunwukong"
-192.168.91.146:7001> get hello
+192.168.91.146:7002> get hello
 -> Redirected to slot [866] located at 192.168.91.146:7000
 "world"
-192.168.91.146:7000> 
+192.168.91.146:7000> get name
+-> Redirected to slot [5798] located at 192.168.91.146:7001
+"sunwukong"
+192.168.91.146:7001> 
+# 从节点默认不能写入
+[root@pseudo-cluster redis-cluster-test]# ./redis-3.2.13/bin/redis-cli -c -p 7004
+127.0.0.1:7004> set key001 value001
+-> Redirected to slot [12657] located at 192.168.91.146:7002
+OK
+192.168.91.146:7002> get key001
+"value001"
+192.168.91.146:7002> 
 ```
